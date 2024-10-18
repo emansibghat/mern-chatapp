@@ -10,10 +10,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 
 
 export default function App() {
-  const [authUser, setAuthUser] = useAuth();
- 
-  console.log(authUser);
-
+  const [authUser] = useAuth();
   return (
     <div>
       <Toaster />

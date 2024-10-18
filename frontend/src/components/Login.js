@@ -8,34 +8,35 @@ import { useNavigate } from 'react-router-dom'
 
 function Login() {
   const [authUser, setAuthUser] = useAuth();
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const userInfo = {
       email: data.email,
       password: data.password,
     };
-    // console.log(userInfo);
-    axios
-       .post("http://localhost:4000/user/login", userInfo)
-      .then((response) => {
-        if (response.data) {
-          toast.success("Login successful");
-          navigate('/');
-        }
-        localStorage.setItem("ChatApp", JSON.stringify(response.data));
-        setAuthUser(response.data);
-      })
-      .catch((error) => {
-        if (error.response) {
-          toast.error("Error: " + error.response.data.error);
-        }
-      });
+
+    try {
+      debugger
+      const response = await axios.post("http://localhost:4000/user/login", userInfo, { withCredentials: true });
+      if (response.data) {
+        toast.success("Login successful");
+        
+        localStorage.setItem("ChatApp", JSON.stringify(response.data.user));
+        setAuthUser(response.data.user);
+        navigate('/');
+      }
+   
+    } catch (error) {
+      if (error.response) {
+        toast.error("Error: " + error.response.data.error);
+      }
+    }
   };
   return (
     <>

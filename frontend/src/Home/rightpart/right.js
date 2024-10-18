@@ -51,7 +51,7 @@ const NoChatSelected = () => {
           <h1 className="text-center">
             Welcome{" "}
             <span className="font-semibold text-xl">
-              {authUser.user.fullname}
+              {authUser.fullname}
             </span>
             <br />
             No chat selected, please start conversation by selecting anyone to

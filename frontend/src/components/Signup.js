@@ -16,7 +16,7 @@ function Signup() {
     formState: { errors },
   } = useForm();
 
- 
+
   const password = watch("password", "");
   const confirmPassword = watch("confirmPassword", "");
 
@@ -31,9 +31,9 @@ function Signup() {
       password: data.password,
       confirmPassword: data.confirmPassword,
     };
-   
+
     await axios
-    .post("http://localhost:4000/user/signup", userInfo)
+      .post("http://localhost:4000/user/signup", userInfo, { withCredentials: true })
       .then((response) => {
         if (response.data) {
           toast.success("Signup successful");

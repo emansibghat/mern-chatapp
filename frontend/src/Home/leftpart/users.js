@@ -14,6 +14,7 @@ function Users() {
         className="py-2 flex-1 overflow-y-auto"
         style={{ maxHeight: "calc(84vh - 10vh)" }}
       >
+        {loading && <p>Loading...</p>}
         {allUsers.map((user, index) => (
           <User key={index} user={user} />
         ))}

@@ -20,7 +20,7 @@ export const SocketProvider = ({ children }) => {
   const { authUser } = useAuth(); // Assuming useAuth returns an object
 
   const connectSocket = useCallback(() => {
-    if (!authUser || !authUser.user || !authUser.user._id) {
+    if (!authUser  || !authUser._id) {
       setError("User not authenticated");
       return;
     }
@@ -30,7 +30,7 @@ export const SocketProvider = ({ children }) => {
 
     const newSocket = io("http://localhost:4000", {
       query: {
-        userId: authUser.user._id,
+        userId: authUser._id,
       },
     });
 

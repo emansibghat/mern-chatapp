@@ -5,9 +5,11 @@ const createTokenAndSaveCookie = (userId, res) => {
     expiresIn: "10d",
   });
   res.cookie("jwt", token, {
-    httpOnly: true, 
-    secure: true,
-    sameSite: "strict", 
+    httpOnly: false,
+    secure: false,
+    sameSite: "strict",
+    path: "/",
   });
+
 };
 export default createTokenAndSaveCookie;

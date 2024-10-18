@@ -9,15 +9,19 @@ function Logout() {
   const handleLogout = async () => {
     setLoading(true);
     try {
-      const res = await axios.post("/http://localhost:4000/user/logout");
-      localStorage.removeItem("ChatApp");
-      Cookies.remove("jwt");
-      setLoading(false);
-      toast.success("Logged out successfully");
-      window.location.reload();
+      
+      const res = await axios.post("http://localhost:4000/user/logout");
+      if (res) {
+        Cookies.remove("jwt", { path: '/' });
+        localStorage.removeItem("ChatApp");
+        toast.success("Logged out successfully");
+        window.location.reload();
+      }
     } catch (error) {
       console.log("Error in Logout", error);
       toast.error("Error in logging out");
+    } finally {
+      setLoading(false);
     }
   };
   return (
