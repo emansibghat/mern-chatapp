@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, useCallback } from "react";
 import { useAuth } from "./AuthProvider";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 
 const SocketContext = createContext();
 
@@ -17,10 +17,10 @@ export const SocketProvider = ({ children }) => {
   const [onlineUsers, setOnlineUsers] = useState([]);
   const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState(null);
-  const { authUser } = useAuth(); // Assuming useAuth returns an object
+  const { authUser } = useAuth();
 
   const connectSocket = useCallback(() => {
-    if (!authUser  || !authUser._id) {
+    if (!authUser || !authUser._id) {
       setError("User not authenticated");
       return;
     }
@@ -33,7 +33,7 @@ export const SocketProvider = ({ children }) => {
         userId: authUser._id,
       },
     });
-
+    
     newSocket.on("connect", () => {
       setSocket(newSocket);
       setIsConnecting(false);

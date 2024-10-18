@@ -22,7 +22,7 @@ function Login() {
     };
 
     try {
-      debugger
+      
       const response = await axios.post("http://localhost:4000/user/login", userInfo, { withCredentials: true });
       if (response.data) {
         toast.success("Login successful");

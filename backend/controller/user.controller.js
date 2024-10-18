@@ -35,10 +35,13 @@ export const Signup = async (req, res) => {
 };
 export const login = async (req, res) => {
   const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ error: "Please fill all the fields" });
+  }
   try {
     const user = await User.findOne({ email });
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!user ||!isMatch) {
+    if (!user || !isMatch) {
       return res.status(400).json({ error: "Invalid user credential" });
     }
     createTokenAndSaveCookie(user._id, res);
@@ -76,9 +79,9 @@ export const allUsers = async (req, res) => {
     const filteredUsers = await User.find({
       _id: { $ne: loggedInUser },
     }).select("-password");
-    res.status(200).json(filteredUsers); 
+    res.status(200).json(filteredUsers);
   } catch (error) {
     console.log("Error in allUsers Controller: " + error);
-    res.status(500).json({ message: "Internal Server Error" }); 
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };

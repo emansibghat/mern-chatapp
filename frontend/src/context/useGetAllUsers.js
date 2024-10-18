@@ -10,7 +10,7 @@ function useGetAllUsers() {
     const getUsers = async () => {
       setLoading(true);
       try {
-        debugger
+        
         const token =  Cookies.get("jwt");
         console.log("Retrieved token from cookies:", token);
         if (!token) {

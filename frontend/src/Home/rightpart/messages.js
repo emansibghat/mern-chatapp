@@ -1,12 +1,12 @@
-
 import React, { useEffect, useRef } from "react";
-import Message from './message'
-import useGetMessage from '../../context/useGetMessage'
+import Message from './message';
+import useGetMessage from '../../context/useGetMessage';
 import Loading from "../../components/Loading.js";
 import useGetSocketMessage from "../../context/useGetSocketMessage.js";
+
 function Messages() {
   const { loading, messages } = useGetMessage();
-  useGetSocketMessage(); 
+  useGetSocketMessage();
   console.log(messages);
 
   const lastMsgRef = useRef();
@@ -19,6 +19,7 @@ function Messages() {
       }
     }, 100);
   }, [messages]);
+
   return (
     <div
       className="flex-1 overflow-y-auto"
@@ -28,8 +29,8 @@ function Messages() {
         <Loading />
       ) : (
         messages.length > 0 &&
-        messages.map((message) => (
-          <div key={message._id} ref={lastMsgRef}>
+        messages.map((message, index) => (
+          <div key={message._id} ref={index === messages.length - 1 ? lastMsgRef : null}>
             <Message message={message} />
           </div>
         ))
