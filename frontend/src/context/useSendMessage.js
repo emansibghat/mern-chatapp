@@ -1,30 +1,49 @@
 import React, { useState } from "react";
-import useConversation from "../zustand/useConversation.js";
+import useConversation from "../zustand/useConversation";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useSocketContext } from "./SocketContext";
+
 const useSendMessage = () => {
   const [loading, setLoading] = useState(false);
-  const { messages, setMessage, selectedConversation } = useConversation();
+  const { messages, setMessage, addMessage, selectedConversation } = useConversation();
+  const { socket } = useSocketContext();
+
   const sendMessages = async (message) => {
+    if (!selectedConversation?._id) return;
+
     setLoading(true);
     try {
-      const token = Cookies.get("jwt")
+      const token = Cookies.get("jwt");
       const res = await axios.post(
         `http://localhost:4000/message/send/${selectedConversation._id}`,
-        { message }, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        withCredentials: true,
-      }
+        { message },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+          withCredentials: true,
+        }
       );
-      setMessage([...messages, res.data]);
+
+      addMessage(res.data);
+
+      if (socket) {
+        socket.emit("sendMessage", {
+          message: res.data,
+          conversationId: selectedConversation._id
+        });
+      }
+
       setLoading(false);
+      return res.data;
     } catch (error) {
       console.log("Error in send messages", error);
       setLoading(false);
+      throw error;
     }
   };
+
   return { loading, sendMessages };
 };
 

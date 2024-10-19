@@ -51,6 +51,15 @@ io.on("connection", (socket) => {
     console.log(`User ${userId} registered with socket ID ${socket.id}`);
   });
 
+  socket.on("sendMessage", ({ message, conversationId }) => {
+    const receiverId = message.receiverId;
+    const receiverSocketId = users.get(receiverId);
+
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("newMessage", message);
+    }
+  });
+
   socket.on("disconnect", () => {
     for (let [userId, socketId] of users.entries()) {
       if (socketId === socket.id) {

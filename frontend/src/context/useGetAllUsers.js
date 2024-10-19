@@ -12,7 +12,7 @@ function useGetAllUsers() {
       try {
         
         const token =  Cookies.get("jwt");
-        console.log("Retrieved token from cookies:", token);
+        // console.log("Retrieved token from cookies:", token);
         if (!token) {
           throw new Error("No token found");
         }
