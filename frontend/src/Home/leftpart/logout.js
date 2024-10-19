@@ -4,14 +4,14 @@ import { BiLogOutCircle } from "react-icons/bi";
 import axios from "axios";
 import Cookies from "js-cookie";
 import toast from "react-hot-toast";
-const API_URL =process.env.API_URL
+const REACT_APP_API_URL =process.env.REACT_APP_API_URL
 function Logout() {
   const [loading, setLoading] = useState(false);
   const handleLogout = async () => {
     setLoading(true);
     try {
       
-      const res = await axios.post(`${API_URL}/user/logout`);
+      const res = await axios.post(`${REACT_APP_API_URL}/user/logout`);
       if (res) {
         Cookies.remove("jwt", { path: '/' });
         localStorage.removeItem("ChatApp");

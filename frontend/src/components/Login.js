@@ -5,7 +5,7 @@ import { useAuth } from "../context/AuthProvider";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 import { useNavigate } from 'react-router-dom'
-const API_URL =process.env.API_URL  ||"https://chatapp-ewhxarc0gydybecx.eastus-01.azurewebsites.net"
+const REACT_APP_API_URL =process.env.REACT_APP_API_URL 
 function Login() {
   const [authUser, setAuthUser] = useAuth();
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ function Login() {
 
     try {
       
-      const response = await axios.post(`${API_URL}/user/login`, userInfo, { withCredentials: true });
+      const response = await axios.post(`${REACT_APP_API_URL}/user/login`, userInfo, { withCredentials: true });
       if (response.data) {
         toast.success("Login successful");
         
