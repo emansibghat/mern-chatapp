@@ -9,19 +9,15 @@ import { Server } from "socket.io";
 import http from "http";
 
 const app = express();
+app.use(cors())
+
 dotenv.config();
 app.use(cookieParser());
-
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  credentials: true,
-};
-app.use(cors(corsOptions));
 
 app.use(express.json());
 dotenv.config();
 const PORT = process.env.PORT || 4000;
-const MONGODB_URI = process.env.mongodb_uri;
+const MONGODB_URI = process.env.MONGODB_URI;
 
 try {
   mongoose.connect(MONGODB_URI);

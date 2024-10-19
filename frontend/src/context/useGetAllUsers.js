@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
-
+const API_URL =process.env.API_URL
 function useGetAllUsers() {
   const [allUsers, setAllUsers] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -16,7 +16,7 @@ function useGetAllUsers() {
         if (!token) {
           throw new Error("No token found");
         }
-        const response = await axios.get("http://localhost:4000/user/allUsers", {
+        const response = await axios.get(`${API_URL}/user/allUsers`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -3,7 +3,7 @@ import { useAuth } from "./AuthProvider";
 import { io } from "socket.io-client";
 
 const SocketContext = createContext();
-
+const API_URL =process.env.API_URL
 export const useSocketContext = () => {
   return useContext(SocketContext);
 };
@@ -16,7 +16,7 @@ export const SocketProvider = ({ children }) => {
   useEffect(() => {
     if (!authUser?._id) return;
 
-    const newSocket = io("http://localhost:4000");
+    const newSocket = io(`${API_URL}`);
 
     newSocket.emit("register", authUser._id);
 
