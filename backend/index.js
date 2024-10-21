@@ -13,9 +13,9 @@ const app = express();
 dotenv.config();
 
 app.use(cors({
-  origin: 'https://chatapp-mu-roan.vercel.app',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
-  credentials: true 
+  origin: ['https://chatapp-mu-roan.vercel.app', "http://localhost:3000"],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
 }));
 app.use(cookieParser());
 app.use(express.json());
@@ -34,7 +34,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: 'https://chatapp-mu-roan.vercel.app',
+    origin: ['https://chatapp-mu-roan.vercel.app', "http://localhost:3000"],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
   },
