@@ -27,6 +27,7 @@ mongoose.connect(MONGODB_URI)
   .then(() => console.log("Connected to MongoDB"))
   .catch((error) => console.log(error));
 
+app.use(cookieParser());
 app.use("/user", userRoute);
 app.use("/message", messageRoute);
 

@@ -1,31 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
 
-const SearchUser = () => {
+const SearchUser = ({ onSearch }) => {
   const [email, setEmail] = useState("");
-  const [user, setUser] = useState(null);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false);
 
-  const handleSearch = async () => {
-    if (!email.trim()) {
-      setError("Email is required");
-      setUser(null);
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-    setUser(null);
-
-    try {
-      const response = await axios.get(`/api/messages/search?email=${email}`);
-      setUser(response.data);
-    } catch (err) {
-      setError(err.response?.data?.error || "An error occurred");
-    } finally {
-      setLoading(false);
-    }
+  const handleSearch = () => {
+    onSearch(email);
   };
 
   return (
@@ -55,17 +35,8 @@ const SearchUser = () => {
           cursor: "pointer",
         }}
       >
-        {loading ? "Searching..." : "Search"}
+        Search
       </button>
-
-      {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
-      {user && (
-        <div style={{ marginTop: "20px", textAlign: "left", background: "#f9f9f9", padding: "10px", borderRadius: "5px" }}>
-          <p><strong>User Found:</strong></p>
-          <p><strong>Name:</strong> {user.name}</p>
-          <p><strong>Email:</strong> {user.email}</p>
-        </div>
-      )}
     </div>
   );
 };

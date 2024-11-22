@@ -3,7 +3,7 @@ import User from "../models/user.model.js";
 
 const secureRoute = async (req, res, next) => {
   try {
-    let token = req.cookies.jwt;
+    let token = req.cookies?.jwt;
 
     if (!token) {
       const authHeader = req.headers.Authorization;
