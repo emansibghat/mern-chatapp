@@ -35,8 +35,21 @@ export const SocketProvider = ({ children }) => {
     };
   }, [authUser]);
 
+  // Move these functions outside of useEffect
+  const joinGroup = useCallback((groupName) => {
+    if (socket) {
+      socket.emit("joinGroup", groupName);
+    }
+  }, [socket]);
+
+  const sendGroupMessage = useCallback((groupName, message) => {
+    if (socket) {
+      socket.emit("sendGroupMessage", { groupName, senderId: authUser._id, message });
+    }
+  }, [socket, authUser]);
+
   return (
-    <SocketContext.Provider value={{ socket, onlineUsers }}>
+    <SocketContext.Provider value={{ socket, onlineUsers, joinGroup, sendGroupMessage }}>
       {children}
     </SocketContext.Provider>
   );
