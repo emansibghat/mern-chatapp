@@ -9,26 +9,23 @@ import { Server } from "socket.io";
 import http from "http";
 
 const app = express();
+
 dotenv.config();
+
+app.use(cors({
+  origin: ['https://chatapp-mu-roan.vercel.app', "http://localhost:3000"],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
 app.use(cookieParser());
-
-const corsOptions = {
-  origin: 'http://localhost:3000',
-  credentials: true,
-};
-app.use(cors(corsOptions));
-
 app.use(express.json());
-dotenv.config();
-const PORT = process.env.PORT || 4000;
-const MONGODB_URI = process.env.mongodb_uri;
 
-try {
-  mongoose.connect(MONGODB_URI);
-  console.log("connected to mongodb");
-} catch (error) {
-  console.log(error);
-}
+const PORT = process.env.PORT || 4000;
+const MONGODB_URI = process.env.MONGODB_URI;
+
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((error) => console.log(error));
 
 app.use("/user", userRoute);
 app.use("/message", messageRoute);
@@ -37,7 +34,9 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: ['https://chatapp-mu-roan.vercel.app', "http://localhost:3000"],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
   },
 });
 

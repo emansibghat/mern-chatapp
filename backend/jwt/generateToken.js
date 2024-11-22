@@ -6,10 +6,10 @@ const createTokenAndSaveCookie = (userId, res) => {
   });
   res.cookie("jwt", token, {
     httpOnly: false,
-    secure: false,
-    sameSite: "strict",
+    secure: true,
+    sameSite: "None",
     path: "/",
   });
-
 };
+
 export default createTokenAndSaveCookie;

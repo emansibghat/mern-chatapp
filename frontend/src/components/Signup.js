@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 
 import toast from "react-hot-toast";
+
+const REACT_APP_API_URL =process.env.REACT_APP_API_URL
 function Signup() {
   const [authUser, setAuthUser] = useAuth();
   const navigate = useNavigate();
@@ -33,7 +35,7 @@ function Signup() {
     };
 
     await axios
-      .post("http://localhost:4000/user/signup", userInfo, { withCredentials: true })
+      .post(`${REACT_APP_API_URL}/user/signup`, userInfo, { withCredentials: true })
       .then((response) => {
         if (response.data) {
           toast.success("Signup successful");

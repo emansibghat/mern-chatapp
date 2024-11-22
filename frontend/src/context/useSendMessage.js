@@ -3,7 +3,7 @@ import useConversation from "../zustand/useConversation";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useSocketContext } from "./SocketContext";
-
+const REACT_APP_API_URL =process.env.REACT_APP_API_URL  
 const useSendMessage = () => {
   const [loading, setLoading] = useState(false);
   const { messages, setMessage, addMessage, selectedConversation } = useConversation();
@@ -16,7 +16,7 @@ const useSendMessage = () => {
     try {
       const token = Cookies.get("jwt");
       const res = await axios.post(
-        `http://localhost:4000/message/send/${selectedConversation._id}`,
+        `${REACT_APP_API_URL}/message/send/${selectedConversation._id}`,
         { message },
         {
           headers: {
