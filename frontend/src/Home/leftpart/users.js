@@ -22,7 +22,7 @@ function Users() {
     setSearchResult(null);
 
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/user/search/${email}`, { withCredentials: true });
+      const response = await axios.get(`http://localhost:4000/user/search/${email}`, { withCredentials: true });
       setSearchResult(response.data.user);
     } catch (err) {
       setSearchError(err.response?.data?.error || "An error occurred");

@@ -9,11 +9,29 @@ function useGetConversations() {
     const getConversations = async () => {
       setLoading(true);
       try {
-        const userId = JSON.parse(localStorage.getItem("ChatApp"))._id;
-        const response = await axios.get(`${process.env.REACT_APP_API_URL}/user/conversation/${userId}`, { withCredentials: true });
+        const userData = localStorage.getItem("ChatApp");
+        if (!userData) {
+          console.error("No user data found in localStorage");
+          return;
+        }
+
+        const parsedData = JSON.parse(userData);
+        if (!parsedData || !parsedData._id) {
+          console.error("No user ID found in parsed data");
+          return;
+        }
+
+        const userId = parsedData._id;
+        console.log("Fetching conversations for user ID:", userId);
+        
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/user/conversation/${userId}`, 
+          { withCredentials: true }
+        );
+        
         setConversations(response.data);
       } catch (error) {
-        console.log("Error in useGetConversations: " + error);
+        console.error("Error in useGetConversations:", error);
       } finally {
         setLoading(false);
       }
